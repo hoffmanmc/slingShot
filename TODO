@@ -25,11 +25,16 @@ X    X>virtualenv and requirements.text setup
 
 *send.py
     >takes option, returns one big func containing:
-        json_builder() - json template for corresponding api
-        send_json() - sends formatted json 
+        json_builder() - json template for corresponding api, implement recursive reading of config file
+        send_json() - sends formatted json data
         map() - takes vars ext by user input and maps to data pulled form db table to use in the above 
 
+*group functions as objects:
+    >slingShot object: contains functions to load config files, parse data, and send
+
 *add logging everywhere!!
+
+*add testing folder, test everything!!
 
 *utilities
     >utilities/ 
