@@ -3,6 +3,7 @@ from datetime import datetime
 import logging
 import concurrent.futures
 from endpoints.send import *
+import configparser
 #import tqdm
 #import time
 #import thread
@@ -11,44 +12,41 @@ from endpoints.send import *
 #import csv
 #import requests
 
-##################################################
-##  Change below constants using the .env file  ##
-##################################################
-
-MIGRATIONNAME = 'files_to_production' # names save data and log files 
-hapikey = '' # hubspot api key
-LIMIT = '' # Num of rows to send (mind the api limit)
-OFFSET = '0' # offset, choose where to start database query
-ORDERBY = '' # order query 
-host = '' # database url
-port = 25060 # " port 
-database = '' # " database
-dbuser = '' # " user 
-dbpasswd = '' # " password 
-TABLE = '' # " table
-#T/P <= to implement, thread or process?
-THREADS = 2 # Number of threads to execute 
 
 
-##################################################
-##                Connections                   ##
-##################################################
+#Load config , later to be moved to interface
+config = configparser.ConfigParser()
+config.read('config.cfg')# change to accept user selected file
 
-#DB Connection
-db = psycopg2.connect(host=host, database=database, user=dbuser, password=dbpasswd, port=port)
-db.autocommit = True
-cursor = db.cursor()
+# Assign config vars
+MIGRATIONNAME = config['SESSION']['MIGRATIONNAME']
+apikey = config['SESSION']['apikey']
+LIMIT = config['SESSION']['LIMIT'] 
+OFFSET = config['SESSION']['OFFSET']
+ORDERBY = config['SESSION']['ORDERBY']
+THREADS = config['SESSION']['THREADS']
+hosturl = config['DATABASE']['hosturl']
+database = config['DATABASE']['database']
+dbuser = config['DATABASE']['dbuser']
+dbpasswd = config['DATABASE']['dbpasswd']
+port = config['DATABASE']['port']
 
-#HS api connection
-file_url = "https://api.hubapi.com/filemanager/api/v3/files/upload"
-note_url = "https://api.hubapi.com/engagements/v1/engagements"
-querystring = { "hapikey" : hapikey }
 
 #Logging config
 logging.basicConfig(filename='./logs/' + MIGRATIONNAME + '.log', level=logging.INFO)
-
-#Open csv for logging
 records_uploaded = './logs/' + MIGRATIONNAME + '.csv'
+
+#DB Connection
+db = psycopg2.connect(host=hosturl, database=database, user=dbuser, password=dbpasswd, port=port)
+db.autocommit = True
+cursor = db.cursor()
+
+#api connection
+file_url = "https://api.hubapi.com/filemanager/api/v3/files/upload"
+note_url = "https://api.hubapi.com/engagements/v1/engagements"
+querystring = { "hapikey" : apikey }
+
+
 
 ##################################################
 ##                Functions                     ##
