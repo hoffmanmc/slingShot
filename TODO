@@ -11,7 +11,7 @@ X    X>virtualenv and requirements.text setup
 *engine file
     >run()********************************** 
         - take params and execute main logic
-        -how to access data, for testing just hardcode and then then add loading
+        X-how to access data, for testing just hardcode and then then add loading
     X>query()
         X-take params and query one table, return pgcb_chunk
         -implement an orm (??benefits??) SQLAlchemy
