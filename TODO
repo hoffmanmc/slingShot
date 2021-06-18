@@ -1,0 +1,53 @@
+X*combine redundant code files
+X    X migration scripts
+X
+X*decouple logic into proper modules
+X    X Code has been broken up 
+X    X needs fleshing out/further editing
+X
+X*manage module imports, 
+X    X>virtualenv and requirements.text setup
+
+*engine file
+    >run()********************************** 
+        - take params and execute main logic
+        -how to access data, for testing just hardcode and then then add loading
+    X>query()
+        X-take params and query one table, return pgcb_chunk
+        -implement an orm (??benefits??) SQLAlchemy
+    X>select_request()
+        -access prebuilt json generators for specified request
+    >implement tqdm
+
+*session
+    >handles options provided by user, creates save state about upload
+    >right now as text file, will update to python when implementing cli
+
+*send.py
+    >takes option, returns one big func containing:
+        json_builder() - json template for corresponding api
+        send_json() - sends formatted json 
+        map() - takes vars ext by user input and maps to data pulled form db table to use in the above 
+
+*add logging everywhere!!
+
+*utilities
+    >utilities/ 
+        >scripts/    
+
+
+*create unified interface
+    -cli
+    -load mappings from csv
+    -installation procedure
+    -save state, saves management
+    -choose csv for loading mappings
+    -cloud hosted?
+
+*create documentation wiki / annotate code
+
+############################################
+#################TESTING:###################
+############################################
+
+
