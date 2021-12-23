@@ -1,2 +1,2 @@
-# slingShot
-An easily modular tool for sending PostGres data to an endpoint as Json, written in Python.
+# slingShot 🏹
+An tool for sending data from Postgres to an endpoint as JSON.
